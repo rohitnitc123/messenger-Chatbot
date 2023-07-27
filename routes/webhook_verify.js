@@ -8,6 +8,8 @@ const router=express.Router();
 
 const processMessage = require('../processes/messages');
 
+
+//   Validating Verification Requests
 router.get("/webhook",(req,res)=>{
    if (req.query['hub.verify_token'] === process.env.VERIFY_TOKEN){
              console.log('webhook verified');
@@ -19,6 +21,7 @@ router.get("/webhook",(req,res)=>{
 });
 
 
+// Create the endpoint for your webhook
 router.post("/webhook",(req,res)=>{
    if (req.body.object === 'page'){
              req.body.entry.forEach(function(entry) {
