@@ -1,4 +1,5 @@
 const request = require('request');
+const { Configuration, OpenAIApi } = require("openai");
 const senderAction = require('../templates/senderAction');
 const sendMessage = require('../templates/sendMessage');
 require('dotenv').config();
@@ -6,7 +7,7 @@ require('dotenv').config();
 //for open ai response
 const axios = require('axios');
 
-const OPENAI_API_URL = 'https://api.openai.com/v1/engines/davinci-codex/completions'; // The API endpoint for text completions using the Davinci Codex model
+//const OPENAI_API_URL = 'https://api.openai.com/v1/engines/davinci-codex/completions'; // The API endpoint for text completions using the Davinci Codex model
 
 
 require('dotenv').config();
@@ -31,31 +32,58 @@ const processMessage=(event)=>{
 }
 
 
+const getOpenAIReply=async(message)=>{
+    const configuration = new Configuration({
+        apiKey: process.env.OPENAI_API_KEY,
+      });
+      const openai = new OpenAIApi(configuration);
+      try {
+        const completion = await openai.createChatCompletion({
+          model: "gpt-3.5-turbo",
+          messages: message,
+        });
+  
+        return completion.data.choices[0].message.content;
+        
+      } 
+      catch (error) {
+        if (error.response) {
+          console.log(error.response.status);
+          console.log(error.response.data);
+        } else {
+          console.log(error.message);
+        }
+      }
+}
+
+
+
+
 
 
 //interaction with openai
-async function getOpenAIReply(prompt) {
-    try {
-      const response = await axios.post(
-        OPENAI_API_URL,
-        {
-          prompt: prompt,
-          max_tokens: 1000, // Adjust this value to control the length of the generated reply
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
-          },
-        }
-      );
+// async function getOpenAIReply(prompt) {
+//     try {
+//       const response = await axios.post(
+//         OPENAI_API_URL,
+//         {
+//           prompt: prompt,
+//           max_tokens: 1000, // Adjust this value to control the length of the generated reply
+//         },
+//         {
+//           headers: {
+//             'Content-Type': 'application/json',
+//             'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
+//           },
+//         }
+//       );
   
-      return response.data.choices[0].text.trim();
-    } catch (error) {
-      console.error('Error fetching OpenAI reply:', error);
-      throw error;
-    }
-  }
+//       return response.data.choices[0].text.trim();
+//     } catch (error) {
+//       console.error('Error fetching OpenAI reply:', error);
+//       throw error;
+//     }
+//   }
   
 
 
