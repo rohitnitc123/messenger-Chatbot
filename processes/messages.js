@@ -1,6 +1,7 @@
 const request = require('request');
 const senderAction = require('../templates/senderAction');
 const sendMessage = require('../templates/sendMessage');
+require('dotenv').config();
 
 //for open ai response
 const axios = require('axios');
