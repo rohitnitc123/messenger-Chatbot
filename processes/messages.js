@@ -24,7 +24,7 @@ const processMessage = async(event) => {
       let text = message.text;
       var request = require("request");
 
-      let messageToBeSent = await getOpenAIReply(message.text);
+      let messageToBeSent = await getOpenAIReply({text:text});
       senderAction(senderID);
       sendMessage(senderID, { text: messageToBeSent });
     }
