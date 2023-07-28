@@ -19,7 +19,7 @@ const processMessage = async(event) => {
       let text = message.text;
       var request = require("request");
 
-      let messageToBeSent = await getOpenAIReply({text:text});
+      let messageToBeSent = await getOpenAIReply(message.text);
       senderAction(senderID);
       sendMessage(senderID, { text: messageToBeSent });
     }
@@ -31,7 +31,7 @@ const getOpenAIReply = async (message) => {
   try {
     const response = await openai.createCompletion({
       model: "text-davinci-003",
-      prompt: message,
+      prompt: "hello",
       max_tokens: 64,
       temperature: 0,
       top_p: 1.0,
