@@ -19,7 +19,7 @@ const processMessage = async(event) => {
       let text = message.text;
       var request = require("request");
 
-      let messageToBeSent = await getOpenAIReply(text);
+      let messageToBeSent = await getOpenAIReply({text:text});
       senderAction(senderID);
       sendMessage(senderID, { text: messageToBeSent });
     }
@@ -43,7 +43,7 @@ const getOpenAIReply = async (message) => {
     return  response.data.choices[0].text;
    
   } catch (error) {
-    return error;
+    return error.message;
   }
 };
 
