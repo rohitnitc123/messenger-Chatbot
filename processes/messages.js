@@ -32,11 +32,11 @@ const processMessage = async(event) => {
 };
 
 
-const getOpenAIReply = async () => {
+const getOpenAIReply = async (message) => {
   try {
     const response = await openai.createCompletion({
       model: "gpt-3.5-turbo",
-      prompt: "What is the capital of France?",
+      prompt: message,
       max_tokens: 64,
       temperature: 0,
       top_p: 1.0,
