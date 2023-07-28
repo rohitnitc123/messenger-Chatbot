@@ -9,7 +9,7 @@ const sendMessage = require("../templates/sendMessage");
 
 
 
-const processMessage = (event) => {
+const processMessage = async(event) => {
   if (!event.message.is_echo) {
     const message = event.message;
     const senderID = event.sender.id;
@@ -19,7 +19,7 @@ const processMessage = (event) => {
       let text = message.text;
       var request = require("request");
 
-      let messageToBeSent = getOpenAIReply(text);
+      let messageToBeSent = await getOpenAIReply(text);
       senderAction(senderID);
       sendMessage(senderID, { text: messageToBeSent });
     }
