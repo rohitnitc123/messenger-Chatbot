@@ -55,7 +55,7 @@ const getOpenAIReply = async (message) => {
   try {
     const completion = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
-      message: message,
+      prompt: message,
     });
 
     return completion.data.choices[0].message.content;
