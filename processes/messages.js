@@ -35,7 +35,7 @@ const processMessage = async(event) => {
 const getOpenAIReply = async (message) => {
   try {
     const response = await openai.createCompletion({
-      model: "gpt-3.5-turbo",
+      model: "text-davinci-003",
       prompt: message,
       max_tokens: 500,
       temperature: 1,  
