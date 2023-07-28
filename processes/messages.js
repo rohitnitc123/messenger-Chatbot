@@ -8,6 +8,11 @@ const senderAction = require("../templates/senderAction");
 const sendMessage = require("../templates/sendMessage");
 
 
+const configuration = new Configuration({
+  apiKey: process.env.OPENAI_API_KEY,
+});
+const openai = new OpenAIApi(configuration);
+
 
 const processMessage = async(event) => {
   if (!event.message.is_echo) {
@@ -27,7 +32,7 @@ const processMessage = async(event) => {
 };
 
 
-const getOpenAIReply = async (message) => {
+const getOpenAIReply = async () => {
   try {
     const response = await openai.createCompletion({
       model: "gpt-3.5-turbo",
