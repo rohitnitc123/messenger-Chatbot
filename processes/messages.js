@@ -43,12 +43,7 @@ const getOpenAIReply = async (message) => {
     return  response.data.choices[0].text;
    
   } catch (error) {
-    return res.status(400).json({
-      success: false,
-      error: error.response
-        ? error.response.data
-        : "There was an issue on the server",
-    });
+    return error;
   }
 };
 
