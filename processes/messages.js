@@ -32,48 +32,42 @@ const processMessage = async(event) => {
 };
 
 
-const getOpenAIReply = async (message) => {
-  try {
-    const response = await openai.createCompletion({
-      model: "text-davinci-003",
-      prompt: message,
-      max_tokens: 2048,
-      temperature: 1,
-      // top_p: 1.0,
-      // frequency_penalty: 0.0,
-      // presence_penalty: 0.0,
-      //stop: ["\n"],
-    });
-
-    return  response.data.choices[0].text;
-   
-  } catch (error) {
-    return error.message;
-  }
-};
-
-
 // const getOpenAIReply = async (message) => {
-//   const configuration = new Configuration({
-//     apiKey: process.env.OPENAI_API_KEY,
-//   });
-//   const openai = new OpenAIApi(configuration);
 //   try {
-//     const completion = await openai.createChatCompletion({
-//       model: "gpt-3.5-turbo",
-//       messages: message,
+//     const response = await openai.createCompletion({
+//       model: "text-davinci-003",
+//       prompt: message,
+//       max_tokens: 2048,
+//       temperature: 1,
+    
 //     });
 
-//     return completion.data.choices[0].message.content;
+//     return  response.data.choices[0].text;
+   
 //   } catch (error) {
-//     if (error.response) {
-//       console.log(error.response.status);
-//       console.log(error.response.data);
-//     } else {
-//       console.log(error.message);
-//     }
+//     return error.message;
 //   }
 // };
+
+
+const getOpenAIReply = async (message) => {
+  
+  try {
+    const completion = await openai.createChatCompletion({
+      model: "gpt-3.5-turbo",
+      message: message,
+    });
+
+    return completion.data.choices[0].message.content;
+  } catch (error) {
+    if (error.response) {
+      console.log(error.response.status);
+      console.log(error.response.data);
+    } else {
+      console.log(error.message);
+    }
+  }
+};
 
 
 module.exports = processMessage;
