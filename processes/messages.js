@@ -24,7 +24,7 @@ const processMessage = async(event) => {
       let text = message.text;
       var request = require("request");
 
-      let messageToBeSent = await getOpenAIReply({text:text});
+      let messageToBeSent = await getOpenAIReply(text);
       senderAction(senderID);
       sendMessage(senderID, { text: messageToBeSent });
     }
@@ -32,42 +32,26 @@ const processMessage = async(event) => {
 };
 
 
-// const getOpenAIReply = async (message) => {
-//   try {
-//     const response = await openai.createCompletion({
-//       model: "text-davinci-003",
-//       prompt: message,
-//       max_tokens: 2048,
-//       temperature: 1,
-    
-//     });
-
-//     return  response.data.choices[0].text;
-   
-//   } catch (error) {
-//     return error.message;
-//   }
-// };
-
 
 const getOpenAIReply = async (message) => {
-  
   try {
-    const completion = await openai.createChatCompletion({
-      model: "gpt-3.5-turbo",
+    const response = await openai.createCompletion({
+      model: "text-davinci-003",
       prompt: message,
+      max_tokens: 2048,
+      temperature: 1,
+    
     });
 
-    return completion.data.choices[0].message.content;
+    return  response.data.choices[0].text;
+   
   } catch (error) {
-    if (error.response) {
-      console.log(error.response.status);
-      console.log(error.response.data);
-    } else {
-      console.log(error.message);
-    }
+    return error.message;
   }
 };
+
+
+
 
 
 module.exports = processMessage;
