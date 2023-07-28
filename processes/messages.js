@@ -24,7 +24,7 @@ const processMessage = async(event) => {
       let text = message.text;
       var request = require("request");
 
-      let messageToBeSent = await getOpenAIReply(text);
+      const messageToBeSent = await getOpenAIReply(text);
       senderAction(senderID);
       sendMessage(senderID, { text: messageToBeSent });
     }
@@ -32,15 +32,13 @@ const processMessage = async(event) => {
 };
 
 
-
 const getOpenAIReply = async (message) => {
   try {
     const response = await openai.createCompletion({
-      model: "text-davinci-003",
+      model: "gpt-3.5-turbo",
       prompt: message,
-      max_tokens: 2048,
-      temperature: 1,
-    
+      max_tokens: 500,
+      temperature: 1,  
     });
 
     return  response.data.choices[0].text;
@@ -49,9 +47,6 @@ const getOpenAIReply = async (message) => {
     return error.message;
   }
 };
-
-
-
 
 
 module.exports = processMessage;
