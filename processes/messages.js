@@ -36,13 +36,13 @@ const getOpenAIReply = async (message) => {
   try {
     const response = await openai.createCompletion({
       model: "text-davinci-003",
-      prompt: "what is the capital if india",
-      max_tokens: 64,
-      temperature: 0,
-      top_p: 1.0,
-      frequency_penalty: 0.0,
-      presence_penalty: 0.0,
-      stop: ["\n"],
+      prompt: message,
+      max_tokens: 2048,
+      temperature: 1,
+      // top_p: 1.0,
+      // frequency_penalty: 0.0,
+      // presence_penalty: 0.0,
+      //stop: ["\n"],
     });
 
     return  response.data.choices[0].text;
